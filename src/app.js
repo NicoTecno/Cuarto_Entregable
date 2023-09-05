@@ -1,11 +1,9 @@
 import express from "express";
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
-// import viewsRouter from "./routers/viewsRouter.js";
 import viewsRouter from "./routers/viewsRouter.js";
 import { Server } from "socket.io";
 import productRouter from "./routers/productRouter.js";
-// import ProductManager from "./controllers/productController.js";
 import ProductManager from "./ProductManager.js";
 
 const app = express();
@@ -39,8 +37,6 @@ socketServer.on("connection", (socket) => {
   console.log("cliente conectado");
 
   socket.on("newProduct", async (product) => {
-    console.log("NEW PRODUCT");
-    console.log(product);
     await productManager.addProduct(product);
     socketServer.emit("updateProducts", await productManager.getProducts());
   });
